@@ -16,13 +16,13 @@ public class TileGenerator : MonoBehaviour
     const float m_MapScale = 0.75f;
 
 
-    void Start()
+    public void GenerateTiles(Tile[,] _tileRefs)
     {
-        InstantiateMap();
+        InstantiateMap(_tileRefs);
         PositionMap();
     }
 
-    void InstantiateMap()
+    void InstantiateMap(Tile[,] _tileRefs)
     {
         for (int i = 0; i < m_Height; i++)
         {
@@ -30,6 +30,7 @@ public class TileGenerator : MonoBehaviour
             {
                 GameObject instantiatedTile = Instantiate(m_TilePrefab, new Vector3(j, i, 0), Quaternion.identity, m_MapReference.transform);
                 instantiatedTile.GetComponent<SpriteRenderer>().color = ((i + j) % 2 == 0) ? Color.white : Color.black;
+                _tileRefs[i,j] = instantiatedTile.GetComponent<Tile>();
             }
         }
     }
