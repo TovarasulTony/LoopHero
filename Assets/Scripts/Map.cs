@@ -10,11 +10,18 @@ public class Map : MonoBehaviour
 
     Tile[,] m_TileRefs;
 
+    const int m_MaxHeight = 12;
+    const int m_MaxWidth = 21;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_TileRefs = new Tile[12, 21];
+        Setup();
+    }
+
+    void Setup()
+    {
+        m_TileRefs = new Tile[m_MaxHeight, m_MaxWidth];
 
         for (int i = 0; i < m_TileRefs.GetLength(0); i++)
         {

@@ -258,6 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15957472a6ba59b48a492d7ca3b0f351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_TileGenerator: {fileID: 1561852205}
 --- !u!1 &1561852204
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,7 +289,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TilePrefab: {fileID: 5722196115950475843, guid: 6641981814d321c42b225c8177c59726, type: 3}
+  m_RoadPrefab: {fileID: 5568738010533268993, guid: 526ea5cfe7d631347bccac0e3e572bde, type: 3}
   m_MapReference: {fileID: 937443210}
+  m_CameraReference: {fileID: 519420031}
 --- !u!4 &1561852206
 Transform:
   m_ObjectHideFlags: 0
