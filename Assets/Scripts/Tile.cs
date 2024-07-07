@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    protected int m_CoordX;
+    protected int m_CoordY;
 
-    // Update is called once per frame
-    void Update()
+    public void SetCoords(int _coordX, int _coordY)
     {
-        
+        m_CoordX = _coordX;
+        m_CoordY = _coordY;
     }
 }
