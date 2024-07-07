@@ -5,6 +5,8 @@ using UnityEngine;
 public class TileGenerator : MonoBehaviour
 {
     [SerializeField]
+    GameObject m_HeroPrefab;
+    [SerializeField]
     GameObject m_TilePrefab;
     [SerializeField]
     GameObject m_RoadPrefab;
@@ -34,12 +36,13 @@ public class TileGenerator : MonoBehaviour
 
     public void GenerateTiles(Tile[,] _tileRefs)
     {
-        InstantiateMap(_tileRefs);
-        InitRoad(_tileRefs);
         PositionCamera();
+        InitMap(_tileRefs);
+        InitRoad(_tileRefs);
+        InitHero();
     }
 
-    void InstantiateMap(Tile[,] _tileRefs)
+    void InitMap(Tile[,] _tileRefs)
     {
         for (int i = 0; i < m_Height; i++)
         {
@@ -57,6 +60,7 @@ public class TileGenerator : MonoBehaviour
 
     void InitRoad(Tile[,] _tileRefs)
     {
+        Road prevRoad = null;
         foreach (var roadCoords in m_RoadTilesCoords)
         {
             Destroy(_tileRefs[roadCoords.Item1, roadCoords.Item2].gameObject);
@@ -64,10 +68,17 @@ public class TileGenerator : MonoBehaviour
             int j = roadCoords.Item2;
             GameObject instantiatedTile = Instantiate(m_RoadPrefab, new Vector3(j, i, 0), Quaternion.identity, m_MapReference.transform);
             instantiatedTile.transform.name = $"[{i}, {j}] Road Tile";
-            Tile tile = instantiatedTile.GetComponent<Tile>();
-            tile.SetCoords(i, j);
-            _tileRefs[i, j] = tile;
+
+            Road road = instantiatedTile.GetComponent<Road>();
+            _tileRefs[i, j] = road;
+            road.SetCoords(i, j);
+            if (prevRoad)
+            {
+                prevRoad.SetNeighbourCoords(i, j);
+            }
+            prevRoad = road;
         }
+        prevRoad.SetNeighbourCoords(m_RoadTilesCoords[0].Item1, m_RoadTilesCoords[0].Item2);
     }
 
     void PositionCamera()
@@ -76,8 +87,11 @@ public class TileGenerator : MonoBehaviour
         m_CameraReference.orthographicSize = m_CameraSize;
     }
 
-    public (int,int) GetStartingCoords()
+    void InitHero()
     {
-        return (m_StartingX, m_StartingY);
+        GameObject instantiatedHero = Instantiate(m_HeroPrefab, new Vector3(m_StartingX, m_StartingY, 0), Quaternion.identity, m_MapReference.transform);
+        instantiatedHero.transform.name = "Hero";
+        instantiatedHero.GetComponent<Hero>().SetMapRef(m_MapReference.GetComponent<Map>());
+        instantiatedHero.GetComponent<Hero>().SetStartingCoords((m_StartingX, m_StartingY));
     }
 }

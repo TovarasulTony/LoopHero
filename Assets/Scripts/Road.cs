@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Road : Tile
 {
+    int m_NeighbourCoordX;
+    int m_NeighbourCoordY;
 
-    // Start is called before the first frame update
-    void Start()
+
+    public void SetNeighbourCoords(int _coordX, int _coordY)
     {
-        
+        m_NeighbourCoordX = _coordX;
+        m_NeighbourCoordY = _coordY;
     }
 
-    // Update is called once per frame
-    void Update()
+    public (int,int) GetNextCoords()
     {
-        
+        return (m_NeighbourCoordX, m_NeighbourCoordY);
     }
 }

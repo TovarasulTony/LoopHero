@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    int m_CoordX;
-    int m_CoordY;
+    protected int m_CoordX;
+    protected int m_CoordY;
 
     public void SetCoords(int _coordX, int _coordY)
     {

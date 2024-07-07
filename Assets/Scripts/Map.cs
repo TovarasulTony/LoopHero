@@ -33,4 +33,9 @@ public class Map : MonoBehaviour
 
         m_TileGenerator.GenerateTiles(m_TileRefs);
     }
+
+    public Tile GetTileRef((int,int) _coords)
+    {
+        return m_TileRefs[_coords.Item1, _coords.Item2];
+    }
 }

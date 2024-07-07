@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3e0519bfb7174a4692750869a9c01c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_HeroPrefab: {fileID: 5435902023757465471, guid: e5aa5f4f30573884a89e3b7eca8fd379, type: 3}
   m_TilePrefab: {fileID: 5722196115950475843, guid: 6641981814d321c42b225c8177c59726, type: 3}
   m_RoadPrefab: {fileID: 5568738010533268993, guid: 526ea5cfe7d631347bccac0e3e572bde, type: 3}
   m_MapReference: {fileID: 937443210}
