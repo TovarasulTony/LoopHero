@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hero : MonoBehaviour
+public class WalkingHero : MonoBehaviour
 {
     Map m_MapReference;
     Road m_CurrentRoadRef;

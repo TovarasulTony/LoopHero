@@ -91,7 +91,7 @@ public class TileGenerator : MonoBehaviour
     {
         GameObject instantiatedHero = Instantiate(m_HeroPrefab, new Vector3(m_StartingX, m_StartingY, 0), Quaternion.identity, m_MapReference.transform);
         instantiatedHero.transform.name = "Hero";
-        instantiatedHero.GetComponent<Hero>().SetMapRef(m_MapReference.GetComponent<Map>());
-        instantiatedHero.GetComponent<Hero>().SetStartingCoords((m_StartingX, m_StartingY));
+        instantiatedHero.GetComponent<WalkingHero>().SetMapRef(m_MapReference.GetComponent<Map>());
+        instantiatedHero.GetComponent<WalkingHero>().SetStartingCoords((m_StartingX, m_StartingY));
     }
 }
