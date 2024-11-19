@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class WalkingHero : MonoBehaviour
 {
-    Map m_MapReference;
+    [SerializeField]
+    private BattlingHero m_BattlingHero;
+
     Road m_CurrentRoadRef;
 
     const float m_MoveInterval = 0.5f;
     float m_CurrentTime = 0;
+    bool m_IsInBattle = false;
 
     public void SetStartingCoords((int,int) _startingCoords)
     {
-        m_CurrentRoadRef = m_MapReference.GetTileRef(_startingCoords).GetComponent<Road>();
-    }
-
-    public void SetMapRef(Map _ref)
-    {
-        m_MapReference = _ref;
+        m_CurrentRoadRef = Map.Instance.GetTileRef(_startingCoords).GetComponent<Road>();
     }
 
     void FixedUpdate()
@@ -28,13 +26,27 @@ public class WalkingHero : MonoBehaviour
     void Move()
     {
         m_CurrentTime += Time.fixedDeltaTime;
-        if (m_MoveInterval > m_CurrentTime)
+        if (m_MoveInterval > m_CurrentTime ||
+            m_IsInBattle == true)
         {
             return;
         }
         m_CurrentTime = 0;
-        Road nextRoad = m_MapReference.GetTileRef(m_CurrentRoadRef.GetNextCoords()).GetComponent<Road>();
-        transform.position = nextRoad.transform.position;
+        Road nextRoad = Map.Instance.GetTileRef(m_CurrentRoadRef.GetNextCoords()).GetComponent<Road>();
+        transform.position = new Vector3(nextRoad.transform.position.x, nextRoad.transform.position.y, nextRoad.transform.position.z - 0.1f);
         m_CurrentRoadRef = nextRoad;
+
+        Battle();
+    }
+
+    void Battle()
+    {
+        List<MapEntity> entityList = m_CurrentRoadRef.GetRoadEntities();
+        if(entityList.Count == 0)
+        {
+            return;
+        }
+        m_IsInBattle = true;
+        BattleManager.Instance.StartBattle(entityList, m_BattlingHero);
     }
 }

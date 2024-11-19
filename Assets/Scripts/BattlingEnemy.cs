@@ -2,26 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattlingHero : MonoBehaviour
+public class BattlingEnemy : MonoBehaviour
 {
     [SerializeField]
     HealthBar m_HealthBar;
 
     const float m_DamageInterval = 0.5f;
     float m_CurrentTime = 0;
-    float[] m_HealthPercentages = new float[] { 90, 80, 70, 60, 50, 40, 30, 20, 10};
+    float[] m_HealthPercentages = new float[] { 90, 80, 70, 60, 50, 40, 30, 20, 10 };
     int m_HealthIndex = 0;
 
-    // Start is called before the first frame update
-    void Start()
+    const float m_MaxHealth = 100;
+    float m_Health = m_MaxHealth;
+
+    public void Hit(float _damage)
     {
-        
+        m_Health -= _damage;
+        m_HealthBar.UpdateHealthBar(100 * m_Health / m_MaxHealth);
+        if (m_Health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        UpdateHealthBar();
+        //UpdateHealthBar();
     }
 
     void UpdateHealthBar()
@@ -32,7 +39,6 @@ public class BattlingHero : MonoBehaviour
         m_CurrentTime = 0;
         if (m_HealthIndex >= m_HealthPercentages.Length)
             return;
-        Debug.Log(m_HealthPercentages[m_HealthIndex]);
         m_HealthBar.UpdateHealthBar(m_HealthPercentages[m_HealthIndex]);
         m_HealthIndex++;
     }

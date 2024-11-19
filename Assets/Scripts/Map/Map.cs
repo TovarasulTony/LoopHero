@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
+    public static Map Instance { get; private set; }
     [SerializeField]
     TileGenerator m_TileGenerator;
 
@@ -13,9 +14,16 @@ public class Map : MonoBehaviour
     const int m_MaxHeight = 12;
     const int m_MaxWidth = 21;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
         Setup();
     }
 

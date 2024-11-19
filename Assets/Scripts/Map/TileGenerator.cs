@@ -5,9 +5,7 @@ using UnityEngine;
 public class TileGenerator : MonoBehaviour
 {
     [SerializeField]
-    GameObject m_HeroPrefab;
-    [SerializeField]
-    GameObject m_TilePrefab;
+    GameObject m_EmptyTilePrefab;
     [SerializeField]
     GameObject m_RoadPrefab;
     [SerializeField]
@@ -21,9 +19,6 @@ public class TileGenerator : MonoBehaviour
     const int m_CameraY = 4;
     const int m_CameraZ = -10;
     const int m_CameraSize = 7;
-
-    const int m_StartingX = 8;
-    const int m_StartingY = 8;
 
     (int, int)[] m_RoadTilesCoords = new (int, int)[]
     {
@@ -39,7 +34,6 @@ public class TileGenerator : MonoBehaviour
         PositionCamera();
         InitMap(_tileRefs);
         InitRoad(_tileRefs);
-        InitHero();
     }
 
     void InitMap(Tile[,] _tileRefs)
@@ -48,7 +42,7 @@ public class TileGenerator : MonoBehaviour
         {
             for (int j = 0; j < m_Width; j++)
             {
-                GameObject instantiatedTile = Instantiate(m_TilePrefab, new Vector3(j, i, 0), Quaternion.identity, m_MapReference.transform);
+                GameObject instantiatedTile = Instantiate(m_EmptyTilePrefab, new Vector3(j, i, 0), Quaternion.identity, m_MapReference.transform);
                 instantiatedTile.transform.name = $"[{i}, {j}] Empty Tile";
                 instantiatedTile.GetComponent<SpriteRenderer>().color = ((i + j) % 2 == 0) ? Color.white : Color.black;
                 Tile tile = instantiatedTile.GetComponent<Tile>();
@@ -63,9 +57,9 @@ public class TileGenerator : MonoBehaviour
         Road prevRoad = null;
         foreach (var roadCoords in m_RoadTilesCoords)
         {
-            Destroy(_tileRefs[roadCoords.Item1, roadCoords.Item2].gameObject);
             int i = roadCoords.Item1;
             int j = roadCoords.Item2;
+            Destroy(_tileRefs[i, j].gameObject);
             GameObject instantiatedTile = Instantiate(m_RoadPrefab, new Vector3(j, i, 0), Quaternion.identity, m_MapReference.transform);
             instantiatedTile.transform.name = $"[{i}, {j}] Road Tile";
 
@@ -85,13 +79,5 @@ public class TileGenerator : MonoBehaviour
     {
         m_CameraReference.transform.position = new Vector3(m_CameraX, m_CameraY, m_CameraZ);
         m_CameraReference.orthographicSize = m_CameraSize;
-    }
-
-    void InitHero()
-    {
-        GameObject instantiatedHero = Instantiate(m_HeroPrefab, new Vector3(m_StartingX, m_StartingY, 0), Quaternion.identity, m_MapReference.transform);
-        instantiatedHero.transform.name = "Hero";
-        instantiatedHero.GetComponent<WalkingHero>().SetMapRef(m_MapReference.GetComponent<Map>());
-        instantiatedHero.GetComponent<WalkingHero>().SetStartingCoords((m_StartingX, m_StartingY));
     }
 }
