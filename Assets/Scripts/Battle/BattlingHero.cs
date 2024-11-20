@@ -9,6 +9,8 @@ public class BattlingHero : MonoBehaviour
     [SerializeField]
     AttackBar m_AttackBar;
     [SerializeField]
+    WalkingHero m_WalkingHero;
+
     BattlingEnemy m_BattlingEnemy;
 
     const float m_DamageInterval = 0.5f;
@@ -18,11 +20,6 @@ public class BattlingHero : MonoBehaviour
     float[] m_HealthPercentages = new float[] { 90, 80, 70, 60, 50, 40, 30, 20, 10, 0};
     int m_HealthIndex = 0;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
     void Update()
     {
         UpdateAttackBar();
@@ -30,7 +27,7 @@ public class BattlingHero : MonoBehaviour
 
     void FixedUpdate()
     {
-        UpdateHealthBar();
+        //UpdateHealthBar();
     }
 
     void UpdateHealthBar()
@@ -60,4 +57,7 @@ public class BattlingHero : MonoBehaviour
     {
         m_BattlingEnemy.Hit(10);
     }
+
+    public void SetBattlingEnemy(BattlingEnemy _battlingEnemy){ m_BattlingEnemy = _battlingEnemy; }
+    public WalkingHero GetWalkingHero() { return m_WalkingHero; }
 }

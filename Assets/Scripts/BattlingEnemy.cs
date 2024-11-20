@@ -7,6 +7,8 @@ public class BattlingEnemy : MonoBehaviour
     [SerializeField]
     HealthBar m_HealthBar;
 
+    MapEntity m_MapEntity;
+
     const float m_DamageInterval = 0.5f;
     float m_CurrentTime = 0;
     float[] m_HealthPercentages = new float[] { 90, 80, 70, 60, 50, 40, 30, 20, 10 };
@@ -15,12 +17,20 @@ public class BattlingEnemy : MonoBehaviour
     const float m_MaxHealth = 100;
     float m_Health = m_MaxHealth;
 
+    public void SetAssociatedMapEntity(MapEntity _mapEntity) {  m_MapEntity = _mapEntity; }
+
+    private void Awake()
+    {
+        m_HealthBar.UpdateHealthBar(100 * m_Health / m_MaxHealth);
+    }
+
     public void Hit(float _damage)
     {
         m_Health -= _damage;
         m_HealthBar.UpdateHealthBar(100 * m_Health / m_MaxHealth);
         if (m_Health <= 0)
         {
+            BattleManager.Instance.RemoveBattlingEnemy(GetComponent<BattlingEnemy>());
             Destroy(gameObject);
         }
     }

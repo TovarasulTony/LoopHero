@@ -49,4 +49,6 @@ public class WalkingHero : MonoBehaviour
         m_IsInBattle = true;
         BattleManager.Instance.StartBattle(entityList, m_BattlingHero);
     }
+
+    public void FinishBattle() { m_IsInBattle = false; }
 }

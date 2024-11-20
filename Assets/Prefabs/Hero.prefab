@@ -247,6 +247,7 @@ MonoBehaviour:
   m_HealthBar: {fileID: 7918266856071397152}
   m_AttackBar: {fileID: 7572453470340619892}
   m_BattlingEnemy: {fileID: 0}
+  m_WalkingHero: {fileID: 3575471236966403781}
 --- !u!1 &3614635958571593088
 GameObject:
   m_ObjectHideFlags: 0
